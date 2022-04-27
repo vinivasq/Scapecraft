@@ -344,23 +344,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &866441832 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6655066056274070181, guid: 7ba207aaa0dfa43b9af2383d1952a99d, type: 3}
-  m_PrefabInstance: {fileID: 3632339302707756925}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &866441840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 866441832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e001c172d1ff746568d7ae2f714acfa8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &900340799
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,14 +624,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 866441833, guid: 7ba207aaa0dfa43b9af2383d1952a99d, type: 3}
-      propertyPath: Loop
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 866441833, guid: 7ba207aaa0dfa43b9af2383d1952a99d, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6655066056274070181, guid: 7ba207aaa0dfa43b9af2383d1952a99d, type: 3}
       propertyPath: m_Name
       value: Rocket Body
