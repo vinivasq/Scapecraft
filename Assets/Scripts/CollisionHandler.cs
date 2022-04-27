@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] float delaySceneManager = 2f;
+
     void OnCollisionEnter(Collision other) 
     {
         switch (other.gameObject.tag)
@@ -11,16 +13,29 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("Lucky you, this won't kill you");
                 break;
             case "Finish":
-                LoadNextScene();
+                NextSceneRoutine();
                 break;
             case "Fuel":
                 Debug.Log("Fuel added");
                 break;
             default:
-                ReloadScene();
+                CrashRoutine();
                 break;
         }
         
+    }
+
+    void CrashRoutine ()
+    {
+        GetComponent<Movement>().enabled = false;
+        Invoke("ReloadScene", delaySceneManager);
+    }
+
+    void NextSceneRoutine ()
+    {
+        GetComponent<Rigidbody>().mass = 9999;
+        GetComponent<Movement>().enabled = false;
+        Invoke ("LoadNextScene", delaySceneManager);
     }
     void LoadNextScene()
     {
@@ -31,9 +46,8 @@ public class CollisionHandler : MonoBehaviour
         {
             nextSceneIndex = 0;
         }
-        
+        GetComponent<Movement>().enabled = false;
         SceneManager.LoadScene(nextSceneIndex);
-
     }
     void ReloadScene()
     {
