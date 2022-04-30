@@ -7,6 +7,11 @@ public class Movement : MonoBehaviour
     [SerializeField] float thrustSpeed = 1000f;
     [SerializeField] float rotateSpeed = 200f;
     [SerializeField] AudioClip thrustSFX;
+
+    [SerializeField] ParticleSystem rightThrusterVSX;
+    [SerializeField] ParticleSystem leftThrusterVFX;
+    [SerializeField] ParticleSystem mainThrusterVFX;
+
     Rigidbody rb; 
     AudioSource audioSource;
     
@@ -32,11 +37,18 @@ public class Movement : MonoBehaviour
             if (!audioSource.isPlaying)
             {
                 audioSource.PlayOneShot(thrustSFX);
+
             }
+            if (!mainThrusterVFX.isPlaying)
+            {
+                mainThrusterVFX.Play();
+            }
+            
         }
         else
         {
             audioSource.Stop();
+            mainThrusterVFX.Stop();
         }
     }
 
@@ -45,11 +57,25 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             ApplyRotation(rotateSpeed);
+            if (!leftThrusterVFX.isPlaying)
+            {
+                leftThrusterVFX.Play();
+            }
+            
         }
 
         else if (Input.GetKey(KeyCode.D))
         {
             ApplyRotation(-rotateSpeed);
+            if (!rightThrusterVSX.isPlaying)
+            {
+                rightThrusterVSX.Play();
+            }
+        }
+        else
+        {
+            rightThrusterVSX.Stop();
+            leftThrusterVFX.Stop();
         }
     }
 

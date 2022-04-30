@@ -7,18 +7,25 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] AudioClip crashSFX;
     [SerializeField] AudioClip successSFX;
 
+    [SerializeField] ParticleSystem successVFX;
+    [SerializeField] ParticleSystem crashVFX;
+   
     AudioSource audioSource;
     
+    bool isTransitioning = false;
+
     void Start() 
     {
-        audioSource = GetComponent<AudioSource>();    
+        audioSource = GetComponent<AudioSource>(); 
     }
     void OnCollisionEnter(Collision other) 
     {
+        if (isTransitioning) { return; } // se colidir em alguma coisa enquanto isTransitioning for true, ira retornar ao inves de avançar e executar o switch novamente, evitando que o jogador possa se mexer ou toque outros SFXs equanto isTransitioning for true.
+
         switch (other.gameObject.tag)
         {
             case "Friendly":
-                Debug.Log("Lucky you, this won't kill you");
+                Debug.Log("Lucky you, this wont kill you");
                 break;
             case "Finish":
                 NextSceneRoutine();
@@ -35,16 +42,22 @@ public class CollisionHandler : MonoBehaviour
 
     void CrashRoutine ()
     {
+        isTransitioning = true;
+        audioSource.Stop();
         audioSource.PlayOneShot(crashSFX);
+        crashVFX.Play();
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadScene", delaySceneManager);
     }
 
     void NextSceneRoutine ()
     {
+        isTransitioning = true;
+        audioSource.Stop();
+        audioSource.PlayOneShot(successSFX);
+        successVFX.Play();
         GetComponent<Rigidbody>().mass = 9999;
         GetComponent<Movement>().enabled = false;
-        audioSource.PlayOneShot(successSFX);
         Invoke ("LoadNextScene", delaySceneManager);
     }
     void LoadNextScene()
@@ -56,7 +69,6 @@ public class CollisionHandler : MonoBehaviour
         {
             nextSceneIndex = 0;
         }
-        GetComponent<Movement>().enabled = false;
         SceneManager.LoadScene(nextSceneIndex);
     }
     void ReloadScene()
