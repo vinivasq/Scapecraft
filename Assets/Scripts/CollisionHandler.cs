@@ -11,16 +11,38 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] ParticleSystem crashVFX;
    
     AudioSource audioSource;
+    BoxCollider rocketCollider;
     
     bool isTransitioning = false;
+    bool collisionDisable = false;
 
     void Start() 
     {
         audioSource = GetComponent<AudioSource>(); 
     }
+
+    void Update()
+    {
+        DebugKeys();
+
+    }
+
+    void DebugKeys()
+    {
+        if (Input.GetKey(KeyCode.L))
+        {
+            LoadNextScene();
+        }
+
+        else if (Input.GetKey(KeyCode.C))
+        {
+            collisionDisable = !collisionDisable; //this is how u toggle 
+        }
+    }
+
     void OnCollisionEnter(Collision other) 
     {
-        if (isTransitioning) { return; } // se colidir em alguma coisa enquanto isTransitioning for true, ira retornar ao inves de avançar e executar o switch novamente, evitando que o jogador possa se mexer ou toque outros SFXs equanto isTransitioning for true.
+        if (isTransitioning || collisionDisable) { return; } // se colidir em alguma coisa enquanto isTransitioning for true, ira retornar ao inves de avançar e executar o switch novamente, evitando que o jogador possa se mexer ou toque outros SFXs equanto isTransitioning for true. O mesmo vale para collisionDisable, se pressionar C o IF faz com que retorne e o codigo a seguir não seja executado.
 
         switch (other.gameObject.tag)
         {

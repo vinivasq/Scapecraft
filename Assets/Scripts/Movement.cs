@@ -33,22 +33,11 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
-            if (!audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(thrustSFX);
-
-            }
-            if (!mainThrusterVFX.isPlaying)
-            {
-                mainThrusterVFX.Play();
-            }
-            
+            StartThrusting();
         }
         else
         {
-            audioSource.Stop();
-            mainThrusterVFX.Stop();
+            StopThrust();
         }
     }
 
@@ -56,33 +45,67 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            ApplyRotation(rotateSpeed);
-            if (!leftThrusterVFX.isPlaying)
-            {
-                leftThrusterVFX.Play();
-            }
-            
+            RotateLeft();
         }
 
         else if (Input.GetKey(KeyCode.D))
         {
-            ApplyRotation(-rotateSpeed);
-            if (!rightThrusterVSX.isPlaying)
-            {
-                rightThrusterVSX.Play();
-            }
+            RotateRight();
         }
         else
         {
-            rightThrusterVSX.Stop();
-            leftThrusterVFX.Stop();
+            StopRotation();
         }
     }
 
-    private void ApplyRotation(float rotateThisFrame)
+    void StartThrusting()
+    {
+        rb.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(thrustSFX);
+
+        }
+        if (!mainThrusterVFX.isPlaying)
+        {
+            mainThrusterVFX.Play();
+        }
+    }
+
+    void StopThrust()
+    {
+        audioSource.Stop();
+        mainThrusterVFX.Stop();
+    }
+
+    void ApplyRotation(float rotateThisFrame)
     {
         rb.freezeRotation = true; // freezing rotation so we can rotate manually 
         transform.Rotate(Vector3.forward * rotateThisFrame * Time.deltaTime);
         rb.freezeRotation = false; // unfreezong rotation so the phisics system can take over
+    }
+
+    void RotateRight()
+    {
+        ApplyRotation(-rotateSpeed);
+        if (!rightThrusterVSX.isPlaying)
+        {
+            rightThrusterVSX.Play();
+        }
+    }
+
+    void RotateLeft()
+    {
+        ApplyRotation(rotateSpeed);
+        if (!leftThrusterVFX.isPlaying)
+        {
+            leftThrusterVFX.Play();
+        }    
+    }
+
+    void StopRotation()
+    {
+        rightThrusterVSX.Stop();
+        leftThrusterVFX.Stop();
     }
 }
