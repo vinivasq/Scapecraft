@@ -3,6 +3,9 @@
 
 Acesse o jogo aqui: https://sharemygame.com/@Vinivasq/scapecraft-beta
 Tutorial rápido:
-A -> Rotacionar para esquerda
-D -> Rotacionar para direito
-ESPAÇo -> Propulção
+
+A -> Rotacionar para esquerda.
+
+D -> Rotacionar para direito.
+
+ESPAÇO -> Propulção.
